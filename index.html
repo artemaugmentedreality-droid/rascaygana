@@ -4,84 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Rasca y Gana - Artem</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
     <style>
         :root {
-            --primary-green: #4dbb00; /* Verde brillante de la imagen */
+            --primary-green: #4dbb00;
             --secondary-green: #3a8c00;
             --white: #ffffff;
-            --dark: #1a1a1a;
             --magenta: #d946ef;
         }
 
         body { 
             margin: 0; padding: 0; 
-            /* Efecto Rayos Sunburst */
-            background: 
-                repeating-conic-gradient(from 0deg, #4dbb00 0deg 15deg, #3a8c00 15deg 30deg);
+            /* Único fondo de rayos Sunburst */
+            background: repeating-conic-gradient(from 0deg, #4dbb00 0deg 15deg, #3a8c00 15deg 30deg);
+            background-attachment: fixed;
             font-family: 'Arial Black', 'Arial Bold', sans-serif; 
             color: var(--white);
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .header-logo { margin-top: 20px; height: 80px; }
-        .header-logo img { max-width: 150px; filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.5)); }
+        .header-logo { margin-top: 20px; height: 70px; display: flex; align-items: center; }
+        .header-logo img { max-width: 160px; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }
 
-        /* Título Estilo Cómic */
         .titulo-principal {
-            font-size: 42px;
+            font-size: 40px;
             color: white;
             text-transform: uppercase;
-            -webkit-text-stroke: 2px #333;
-            text-shadow: 4px 4px 0px #333;
-            margin: 10px 0;
+            -webkit-text-stroke: 1.5px #222;
+            text-shadow: 3px 3px 0px #222;
+            margin: 10px 0 5px 0;
             font-style: italic;
-            transform: scale(1, 1.2);
+            text-align: center;
         }
 
         .instrucciones {
-            background: rgba(0,0,0,0.2);
-            padding: 5px 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border: 2px solid #FFD700;
+            background: rgba(0,0,0,0.3);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 25px;
+            border: 1.5px solid #FFD700;
             color: #FFD700;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Contenedor del Billete */
+        /* Contenedor sin marcos ni fondos planos */
         .billete-container {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 20px;
-            box-shadow: 0 10px 0px #2a6600;
-            width: 85%;
-            max-width: 350px;
-            border: 5px solid #ffffff;
-            background-color: var(--primary-green);
+            width: 90%;
+            max-width: 360px;
+            background: transparent; /* Eliminado el fondo verde plano */
+            padding: 0;
+            border: none; /* Eliminado el marco blanco */
         }
 
         .grid-loteria {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 15px;
+            justify-items: center;
         }
 
         .modulo-rasca {
             position: relative;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: #f0f0f0;
-            border-radius: 12px;
+            width: 145px;
+            height: 145px;
+            background: #ffffff;
+            border-radius: 15px;
             overflow: hidden;
-            border: 3px solid #ffffff;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            /* Borde sutil para que cada cuadrito resalte sobre el sunburst */
+            border: 4px solid #ffffff; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
         }
 
         .premio-oculto {
             width: 100%; height: 100%;
             display: flex; justify-content: center; align-items: center;
+            background-color: #f8f8f8;
         }
 
         .premio-oculto img { width: 80%; height: 80%; object-fit: contain; }
@@ -94,37 +99,39 @@
             cursor: crosshair;
         }
 
-        /* Botones Estilo Imagen */
+        /* Botones vibrantes */
         .btn-action {
-            background: linear-gradient(to bottom, #ff00ff, #8a008a);
-            color: white; border: 4px solid white; padding: 15px 30px; 
-            border-radius: 20px; font-weight: 900; font-size: 18px; 
-            margin-top: 20px; cursor: pointer; display: none;
+            background: linear-gradient(to bottom, #ff22ff, #a000a0);
+            color: white; border: 3px solid white; padding: 16px 35px; 
+            border-radius: 50px; font-weight: 900; font-size: 18px; 
+            margin-top: 30px; cursor: pointer; display: none;
             text-transform: uppercase;
-            box-shadow: 0 5px 0px #4a004a;
-            width: 90%;
-            max-width: 300px;
+            box-shadow: 0 6px 0px #500050, 0 10px 20px rgba(0,0,0,0.3);
+            width: 85%;
+            transition: transform 0.1s;
         }
 
+        .btn-action:active { transform: translateY(4px); box-shadow: 0 2px 0px #500050; }
+
         .btn-reintentar {
-            background: #95a5a6;
-            box-shadow: 0 5px 0px #7f8c8d;
-            border: 3px solid white;
-            color: white; padding: 10px 20px; border-radius: 15px;
-            margin-top: 15px; cursor: pointer; display: none;
-            font-family: sans-serif; font-weight: bold;
+            background: #7f8c8d;
+            box-shadow: 0 4px 0px #5d6d6e;
+            border: 2px solid white;
+            color: white; padding: 12px 25px; border-radius: 15px;
+            margin-top: 20px; cursor: pointer; display: none;
+            font-weight: bold; text-transform: uppercase;
         }
 
         /* Modales */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
-        .caja-blanca { background: white; color: #333; padding: 25px; border-radius: 20px; width: 80%; max-width: 320px; text-align: center; border: 5px solid var(--primary-green); }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; flex-direction: column; justify-content: center; align-items: center; }
+        .caja-blanca { background: white; color: #333; padding: 30px; border-radius: 25px; width: 85%; max-width: 320px; text-align: center; border: 6px solid var(--primary-green); }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
     <div class="header-logo">
-        <img src="logo-cliente.webp" alt="Logo">
+        <img src="logo-cliente.webp" alt="Artem">
     </div>
 
     <h1 class="titulo-principal">RASCA Y GANA</h1>
@@ -140,30 +147,30 @@
 
     <div id="modal-registro" class="overlay">
         <div class="caja-blanca">
-            <h2 style="margin:0; color: var(--secondary-green);">¡GANASTE!</h2>
-            <p id="txt-premio" style="font-weight: 900; color: #d35400; font-size: 1.2rem;"></p>
-            <input type="text" id="nombre" placeholder="Nombre completo">
-            <input type="tel" id="whatsapp" placeholder="WhatsApp (10 dígitos)">
+            <h2 style="margin:0; color: var(--secondary-green);">¡LO LOGRASTE!</h2>
+            <p id="txt-premio" style="font-weight: 900; color: #e67e22; font-size: 1.3rem;"></p>
+            <input type="text" id="nombre" placeholder="Tu nombre">
+            <input type="tel" id="whatsapp" placeholder="WhatsApp">
             <div style="font-size: 12px; text-align: left; margin: 10px 0;">
                 <input type="checkbox" id="aviso"> Acepto el <span style="text-decoration:underline; cursor:pointer" onclick="togglePriv(true)">aviso de privacidad</span>.
             </div>
-            <button class="btn-action" style="display:block; width:100%;" onclick="enviarWhatsApp()">CANJEAR AHORA</button>
+            <button class="btn-action" style="display:block; width:100%; margin:0;" onclick="enviarWhatsApp()">CANJEAR POR WHATSAPP</button>
         </div>
     </div>
 
     <div id="modal-priv" class="overlay" style="z-index: 2000;">
         <div class="caja-blanca">
             <h3>Privacidad</h3>
-            <p style="font-size: 14px;">Tus datos se usarán solo para validar tu premio vía WhatsApp.</p>
-            <button class="btn-reintentar" style="display:block; width:100%;" onclick="togglePriv(false)">CERRAR</button>
+            <p style="font-size: 14px;">Solo usaremos tus datos para entregar el premio.</p>
+            <button class="btn-reintentar" style="display:block; width:100%;" onclick="togglePriv(false)">VOLVER</button>
         </div>
     </div>
 
     <script>
-        const PREMIOS = ["premio1", "premio2", "premio3", "premio4"];
-        const NOMBRES_PREMIOS = {
+        const PREMIOS = ["premio1", "premio2", "premio3", "premio4", "premio5"];
+        const NOMBRES = {
             "premio1": "10% DESCUENTO", "premio2": "20% DESCUENTO",
-            "premio3": "CERVEZA GRATIS", "premio4": "POSTRE GRATIS"
+            "premio3": "30% DESCUENTO", "premio4": "CERVEZA GRATIS", "premio5": "POSTRE GRATIS"
         };
         
         let esGanador = Math.random() < 0.4;
@@ -174,7 +181,7 @@
             let esquema = [];
             if (esGanador) {
                 const p = PREMIOS[Math.floor(Math.random() * PREMIOS.length)];
-                premioFinal = NOMBRES_PREMIOS[p];
+                premioFinal = NOMBRES[p];
                 esquema = [p, p, p];
                 while(esquema.length < 6) {
                     let r = PREMIOS[Math.floor(Math.random() * PREMIOS.length)];
@@ -239,7 +246,7 @@
         function enviarWhatsApp() {
             const n = document.getElementById('nombre').value;
             const w = document.getElementById('whatsapp').value;
-            if(!n || w.length < 10 || !document.getElementById('aviso').checked) return alert("Completa los datos");
+            if(!n || w.length < 10 || !document.getElementById('aviso').checked) return alert("Por favor completa los datos.");
             window.location.href = `https://wa.me/5215542492026?text=${encodeURIComponent('*LOTERÍA ARTEM*\n🏆 Premio: '+premioFinal+'\n👤 Cliente: '+n)}`;
         }
 
